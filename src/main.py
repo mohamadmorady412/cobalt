@@ -1,6 +1,12 @@
-from logger import get_logger
+from fastapi import FastAPI
+from slowapi.middleware import SlowAPIMiddleware
 
-logger = get_logger(__name__)
+from auth.auth_middleware import AuthMiddleware
+from middleware.rate_limiter import limiter
+from routes import router
 
-logger.info("Starting the application")
-logger.error("This is an error")
+app = FastAPI()
+app.state.limiter = limiter
+app.add_middleware(SlowAPIMiddleware)
+app.add_middleware(AuthMiddleware)
+app.include_router(router)
