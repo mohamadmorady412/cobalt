@@ -1,8 +1,7 @@
+from auth import create_access_token
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
 from users_db import verify_user
-
-from auth import create_access_token
 
 app = FastAPI()
 
